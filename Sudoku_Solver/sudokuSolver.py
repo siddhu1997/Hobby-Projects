@@ -8,12 +8,34 @@ import sys
 
 class sudokuSolver:
 
-	def __init__(self):
+	def __init__(self, user_input = None):
 
 		self._range_ = range(9)
 		self._box_   = range(3)								#Constructor that return an empty 9x9 matrix
-
 		self.matrix = [ [0 for x in self._range_] for y in self._range_ ]
+		self.error = []
+		if user_input is not None:
+			for i in user_input:
+				if "123456789".find(i[1])!=-1 and "123456789".find(i[3])!=-1 :
+					row = int(i[1])-1
+					column = int(i[3])-1
+					if user_input[i] not in range(1,10):
+						self.error.append('Error : Invalid Value \''+str(user_input[i])+'\' for Location ('+i[1]+','+i[3]+')')
+					else:
+						self.matrix[row][column] = user_input[i]
+				else:
+					self.error.append('Error : Invalid Location ('+i[1]+','+i[3]+')')
+
+	def checkError(self):
+
+		if len(self.error)>0:
+			return True,self.error
+		else:
+			return False,[]
+
+	def outputMatrix(self):
+
+		return self.matrix
 
 	def Empty(self,rc_list):
 
